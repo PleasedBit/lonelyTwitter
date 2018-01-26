@@ -12,3 +12,5 @@ public interface Tweetable {
     Date getDate();
 
 }
+
+
