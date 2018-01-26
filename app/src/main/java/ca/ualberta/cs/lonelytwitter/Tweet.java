@@ -1,61 +1,52 @@
 package ca.ualberta.cs.lonelytwitter;
 
-
 import java.util.Date;
 
 /**
- * Created by Craig on 2018-01-18.
+ * Created by dezfuli on 1/16/18.
  */
+
 public abstract class Tweet implements Tweetable {
-    private String msg;
+    private String message;
     private Date date;
-    private Mood[] moods;
 
+    Tweet(String message){
 
-    // Constructors
-    public Tweet(String msg){
-        this.msg = msg;
-        this.date = new Date();
-
-        // Because I can, preload the mood array with the moods I have created
-        this.moods = new Mood[2];
-        this.moods[0] = new MoodHappy();
-        this.moods[1] = new MoodSad();
+        this.message = message;
+        date = new Date();
+//        message = message;
     }
 
-    public Tweet(String msg, Date date){
-        this.msg = msg;
+    Tweet(String message, Date date){
+        this.message = message;
         this.date = date;
-
-        // Because I can, preload the mood array with the moods I have created
-        this.moods = new Mood[2];
-        this.moods[0] = new MoodHappy();
-        this.moods[1] = new MoodSad();
     }
 
+    public String getMessage(){
+        return message;
+    }
 
-    // DATE
+    public void setMessage(String message) throws TweetTooLongException{
+        if (message.length() < 140){
+            this.message = message;
+        }
+        else{
+            throw new TweetTooLongException();
+        }
+    }
+
     public Date getDate(){
-        return this.date;
+        return date;
     }
 
     public void setDate(Date date){
         this.date = date;
     }
 
-
-    // Message
-    public String getMsg(){
-        return this.msg;
-    }
-
-    public void setMsg(String msg) throws TweetTooLongException {
-        if (msg.length() > 140) {
-            throw new TweetTooLongException();
-        } else {
-            this.msg = msg;
-        }
-    }
-
     public abstract Boolean isImportant();
+
+    public String toString() {
+        return date.toString() + " | " + message;
+
+    }
 }
